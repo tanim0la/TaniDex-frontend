@@ -10,6 +10,7 @@ import {
   getReserveOfGouTokens,
 } from '../utils/getAmounts'
 import { getAmountOfTokensReceivedFromSwap, swapTokens } from '../utils/swap'
+import { PROVIDER } from '../constants'
 
 function Swap(props) {
   const zero = BigNumber.from(0)
@@ -31,16 +32,26 @@ function Swap(props) {
         setConnected(true)
         getAmounts()
       })()
+    } else {
+      getSwapAmount()
     }
   }, [props.provider, loading])
+
+  const getSwapAmount = async () => {
+    const _ethReserve = await getEtherBalance(PROVIDER, null, true)
+    const _reserveGOU = await getReserveOfGouTokens(PROVIDER)
+
+    setEthReserve(_ethReserve)
+    setReserveGOU(_reserveGOU)
+  }
 
   const getAmounts = async () => {
     const addy = await props.provider.listAccounts()
 
     const _ethBalance = await getEtherBalance(props.provider, addy[0])
     const _gouBalance = await getGouTokensBalance(props.provider, addy[0])
-    const _ethReserve = await getEtherBalance(props.provider, null, true)
-    const _reserveGOU = await getReserveOfGouTokens(props.provider)
+    const _ethReserve = await getEtherBalance(PROVIDER, null, true)
+    const _reserveGOU = await getReserveOfGouTokens(PROVIDER)
 
     setEthReserve(_ethReserve)
     setReserveGOU(_reserveGOU)
@@ -108,7 +119,7 @@ function Swap(props) {
         if (firsttoken == 'ETH') {
           const amountToReceive = await getAmountOfTokensReceivedFromSwap(
             valueToWei,
-            props.provider,
+            PROVIDER,
             true,
             ethReserve,
             reservedGOU,
@@ -118,7 +129,7 @@ function Swap(props) {
         } else {
           const amountToReceive = await getAmountOfTokensReceivedFromSwap(
             valueToWei,
-            props.provider,
+            PROVIDER,
             false,
             ethReserve,
             reservedGOU,

@@ -1,3 +1,5 @@
+import { providers } from 'ethers'
+
 export const TOKEN_CONTRACT_ABI = [
   {
     inputs: [
@@ -820,3 +822,6 @@ export const EXCHANGE_CONTRACT_ABI = [
 ]
 export const EXCHANGE_CONTRACT_ADDRESS =
   '0xE39a24d3428d6F9f00df4ecFE49859Ee058fF2e7'
+export const PROVIDER = new providers.JsonRpcProvider(
+  'https://rinkeby.infura.io/v3/adaa638d09ba451589fc8a00235e3489',
+)

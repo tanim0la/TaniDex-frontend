@@ -228,7 +228,7 @@ function Swap(props) {
         ) : (
           <button
             onClick={onConnect}
-            className="text-center w-full bg-red-200 text-red-700 my-3 py-4 rounded-2xl hover:bg-red-300"
+            className="text-center w-full bg-red-200 text-red-700 my-3  py-4 rounded-2xl hover:bg-red-300"
           >
             Connect Wallet
           </button>
